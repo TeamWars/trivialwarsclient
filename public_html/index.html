@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
+        <link rel="stylesheet" href="resources/css/index/principal.css" />
+        <!--<script type="text/javascript" src="resources/js/libs/jquery-1.9.0/jquery.min.js"></script>-->
+        <script src="resources/js/jqueryui/jquery-1.10.2.js"></script>
+        <script src="resources/js/jqueryui/jquery-ui-1.10.4.custom.js"></script>
+        <link href="resources/css/dialog/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+        <title>Trivial Wars</title>
+        <style type="text/css">
+            @font-face
+            {
+                font-family: "starwars";
+                src: url("resources/fonts/Starjhol.ttf");
+            }
+            body{
+                background-image: url("resources/images/fondo.jpg");
+            }
+            #registroUsuarios{
+                background-image: url("resources/images/backgroundFormIndex.png");
+                background-repeat: no-repeat;
+                background-size: 100%;
+            }
+
+
+        </style>
+        <script type="text/javascript">
+            $(document).ready(function() {
+
+                $("#formUsuarios").off().on("submit", function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/login',
+                        method: 'POST',
+                        dataType: 'json',
+                        data: $("#formUsuarios").serialize(),
+                        success: function(data) {
+                            if (data) {
+                                if (data[0].rol == "ROLE_ADMIN") {
+                                    location.assign("/TrivialWarsClient/public_html/admin.html");
+                                } else {
+                                    location.assign("/TrivialWarsClient/public_html/user.html");
+                                }
+                            }
+                        },
+                        error: function(error) {
+                            alert("error");
+                        }
+                    });
+                });
+                $("#dialog").dialog({
+                    autoOpen: false,
+                    width: 450,
+                    buttons: [{
+                            text: "ok",
+                            click: function() {
+                                $(this).dialog("close");
+                            }},{
+                            text: "cancelar",
+                            click: function() {
+                                $(this).dialog("close");
+                             }
+                        }]
+                });
+                // Link to open the dialog
+                $("#register").click(function(event) {
+                    $("#dialog").dialog("open");
+                });
+                // Hover states on the static widgets
+                $("#dialog-link, #icons li").hover(
+                        function() {
+                            $(this).addClass("ui-state-hover");
+                        },
+                        function() {
+                            $(this).removeClass("ui-state-hover");
+                        }
+                );
+            });
+
+        </script>
+    </head>
+    <body>
+        <div id="cabecera">
+            <div id="logo">
+                <h1 id="titulo">trivial wars</h1>
+            </div>
+        </div>
+        <div id="registroUsuarios" align="center">
+            <form id="formUsuarios">
+                Usuario:<input type = 'text' id="user" name = 'user' /><br>
+                Password:<input type = 'password' id="password" name = 'password' /><br>
+                <p id="textRemember"><input id="remember" name="remember" type="checkbox" style="text-align: left;"/>Recordarme</p>
+                <input id="loginButton" type="submit" class="botonUsuarios" value="login" /><br>
+                <a href="#"><p id="register">¿Aún no tienes cuenta? Regístrate</p></a>
+            </form>
+        </div>
+
+        <div id="dialog" title="Registro">
+            <p class="validateTips">Todos los campos son requeridos.</p>
+            <form>
+                <fieldset>
+                    <label for="name">Nombre</label><br/>
+                    <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                    <label for="password">Contraseña</label><br/>
+                    <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                    <label for="email">E-mail</label><br/>
+                    <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                </fieldset>
+            </form>
+        </div>
+
+
+    </body>
+</html>

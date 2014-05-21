@@ -1,0 +1,130 @@
+@font-face { 
+    font-family: 'starwars2'; 
+    src: url("<?php echo $view['assets']->getUrl('bundles/trivial/fonts/BAUHS93.TTF'); ?>") format('ttf'); 
+} 
+body{
+    background: url('../..//images/fondo.jpg') no-repeat center center fixed;
+}
+#board{
+    /*margin-left: 7%;*/
+    float: left;
+    border-image: url("../..//images/barra1.png");
+}
+#questions{
+    float: right;
+    width: 20%;
+    margin-right: 20px;
+    color: yellow;
+    font-size: 22px;
+    font-family: "starwars2";
+}
+td{
+    width: 80px;
+    height: 80px;
+    padding-top: 7px;
+    padding-right: 7px;
+    padding-left: 7px;
+    padding-bottom: 7px;
+    background-repeat: no-repeat;    
+}
+/*#ficha1 {
+    position: absolute;
+    //position: relative;
+}
+#ficha2 {
+    position: absolute;
+    //position: relative;
+}
+#ficha3 {
+    position: absolute;
+    //position: relative;
+}
+#ficha4 {
+    position: absolute;
+    //position: relative;
+}*/
+
+#ficha1 {
+    position: absolute;
+    top: 76%;
+    left: 10%;
+    //top: 50px;
+    //left: 50px;
+}
+
+#ficha2 {
+    position:absolute;
+    top: 76%;
+    left: 8%;
+    /*    top: 50px;
+        right: 50px;*/
+}
+
+#ficha3 {
+    position:absolute;
+    top: 76%;
+    left: 4.5%;
+    /*    bottom: 50px;
+        right: 50px;*/
+}
+
+#ficha4 {
+    position:absolute;
+    top: 76%;
+    /*left: 3%;*/
+    /*    bottom: 50px;
+        left: 50px;*/
+}
+
+.claseBottom{
+    border-bottom-style:double;
+    border-bottom-width:5px;
+    border-bottom-color:#08C;    
+}
+
+.claseRight{
+    border-right-style:double;
+    border-right-width:5px;
+    border-right-color:#08C;    
+}
+
+.claseTop{
+    border-top-style:double;
+    border-top-width:5px;
+    border-top-color:#08C;    
+}
+
+.claseLeft{
+    border-left-style:double;
+    border-left-width:5px;
+    border-left-color:#08C;    
+}
+
+.other{
+    border: 1px solid green;
+
+}
+
+#marcadorP{
+    /*    float: right;
+        width: 20%; */
+    /*margin-left: 10px;*/
+    color: yellow;
+    font-size: 32px;
+    font-family: "starwars2";
+}
+
+/*#board{
+    color: yellow;
+    font-size: 22px;
+    font-family: "starwars2";
+}*/
+
+#mensajeP{
+    /*    float: right;
+        width: 20%;
+        margin-right: 20px;*/
+    color: yellow;
+    font-size: 32px;
+    font-family: "starwars2";
+}

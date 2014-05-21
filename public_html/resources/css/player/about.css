@@ -1,0 +1,71 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08-may-2014, 21:00:26
+    Author     : acer
+*/
+@font-face
+{
+    font-family: "starwars";
+    src: url("../..//fonts/Starjhol.ttf");
+}
+@font-face{
+    font-family: "starwarsrelleno";
+    src: url("../..//fonts/Strjmono.ttf");
+}
+
+body{
+    background: url("../..//images/fondo.jpg") no-repeat center center fixed;
+}
+
+#cabecera{
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+#logo{
+    width: 100%;
+}
+
+#titulo{
+    color: yellow;
+    font-size: 500%;
+    font-family: "starwars";
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#titleAbout{
+    color: yellow;
+    font-size: 400%;
+    font-family: "starwarsrelleno";
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#info{
+    width: 80%;
+}
+
+#text{
+    float: right;
+    color: yellow;
+    font-family: "starwarsrelleno";
+    margin-top: 0px;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+#text h2{
+    text-align: left;
+}
+
+#image{
+    float: left;
+    margin-left: 10%;
+    width: 27%;
+}

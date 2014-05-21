@@ -1,0 +1,161 @@
+/* 
+    Document   : principal
+    Created on : 30-oct-2013, 19:40:46
+    Author     : Marina
+    Description:
+        Purpose of the stylesheet follows.
+*/
+@font-face
+{
+    font-family: "starwars";
+    src: url("../..//fonts/starjedi/Starjhol.ttf");
+}
+@font-face
+{
+    font-family: "starwars2";
+    src: url("../..//fonts/starjedi/Starjedi.ttf");
+}
+
+body{
+    background: no-repeat center center fixed;
+}
+
+#cabecera{
+    width: 100%;
+    height: 20%;
+    text-align: center;
+}
+
+#logo{
+    width: 100%;
+}
+
+#titulo{
+    color: yellow;
+    font-size: 500%;
+    font-family: "starwars";
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#registroUsuarios{
+    text-align: center;
+    width: 65%;
+    height: 500px;
+    padding: 30px 30px 30px 0px;
+    margin-left: 17%;
+}
+
+#registroUsuarios form{
+    margin-left: 45%;
+    width: 60%;
+    height: 70%;
+    padding-top: 20px;
+    color: yellow;
+    font-size: 20px;
+    font-family: "starwars";
+}
+
+#user,#password{
+    width: 40%;
+    margin-top: 5%;
+    color: black;
+    font-size: x-large;
+}
+
+
+
+#register, #textRemember{
+    font-size: 15px;
+    font-family: monospace;
+}
+
+form a:visited{
+    color: yellow; 
+}
+form a:hover{
+    color: #0ddbff; 
+}
+
+#loginButton{
+    margin-top: 5%;
+}
+
+.botonUsuarios{
+    border-top: 1px solid #96d1f8;
+    background: #020405;
+    background: -webkit-gradient(linear, left top, left bottom, from(#525659), to(#020405));
+    background: -webkit-linear-gradient(top, #525659, #020405);
+    background: -moz-linear-gradient(top, #525659, #020405);
+    background: -ms-linear-gradient(top, #525659, #020405);
+    background: -o-linear-gradient(top, #525659, #020405);
+    padding: 17.5px 35px;
+    -webkit-border-radius: 23px;
+    -moz-border-radius: 23px;
+    border-radius: 23px;
+    -webkit-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    -moz-box-shadow: rgba(0,0,0,1) 0 1px 0;
+    box-shadow: rgba(0,0,0,1) 0 1px 0;
+    text-shadow: rgba(0,0,0,.4) 0 1px 0;
+    color: #fffb00;
+    font-size: 110%;
+    font-family: "starwars";
+    text-decoration: none;
+    vertical-align: middle;
+    margin-top: 5%;
+    width: 60%;
+    height: 20%;
+}
+
+#loginButton:hover, #registerButton:hover, button:hover {
+    border-top-color: #0e1d26;
+    background: #0e1d26;
+    color: #0ddbff;
+}
+#loginButton:active, #registerButton:active, button:active {
+    border-top-color: #e3e6e8;
+    background: #e3e6e8;
+}
+
+//DIALOG
+
+#titleAbout{
+    color: yellow;
+    font-size: 400%;
+    font-family: "starwarsrelleno";
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
+#info{
+    width: 80%;
+}
+
+#text{
+    float: right;
+    color: yellow;
+    font-family: "starwarsrelleno";
+    margin-top: 0px;
+    margin-bottom: 20px;
+    width: 50%;
+}
+
+#text h2{
+    text-align: left;
+}
+
+#image{
+    float: left;
+    margin-left: 10%;
+    width: 30%;
+}
+
+fieldset > *{
+    margin-left: 9%;
+}
+
+.inputRegister{
+    width: 80%;
+    height: 10%;
+    margin-bottom: 3%;
+}

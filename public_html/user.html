@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
+        <link rel="stylesheet" href="resources/css/player/player.css" />
+        <script src="resources/js/jqueryui/jquery-1.10.2.js"></script>
+        <script src="resources/js/jqueryui/jquery-ui-1.10.4.custom.js"></script>
+        <link href="resources/css/dialog/jquery-ui-1.10.4.custom.css" rel="stylesheet">
+        <title>Trivial Wars</title>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $("#dialogAbout").dialog({
+                    autoOpen: false,
+                    width: 900,
+                    buttons: [{
+                            text: "ok",
+                            click: function() {
+                                $(this).dialog("close");
+                            }
+                        }]
+                });
+                $("#dialogConfig").dialog({
+                    autoOpen: false,
+                    width: 900,
+                    buttons: [{
+                            text: "ok",
+                            click: function() {
+                                $(this).dialog("close");
+                            }
+                        }]
+                });
+                // Link to open the dialog
+                $("#aboutButton").click(function(event) {
+                    $("#dialogAbout").dialog("open");
+                });
+                $("#configButton").click(function(event) {
+                    $("#dialogConfig").dialog("open");
+                });
+                // Hover states on the static widgets
+                $("#dialog-link, #icons li").hover(
+                        function() {
+                            $(this).addClass("ui-state-hover");
+                        },
+                        function() {
+                            $(this).removeClass("ui-state-hover");
+                        }
+                );
+
+                $('#cssmenu ul ul li:odd').addClass('odd');
+                $('#cssmenu ul ul li:even').addClass('even');
+                $('#cssmenu > ul > li > a').click(function() {
+                    $('#cssmenu li').removeClass('active');
+                    $(this).closest('li').addClass('active');
+                    var checkElement = $(this).next();
+                    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                        $(this).closest('li').removeClass('active');
+                        checkElement.slideUp('normal');
+                    }
+                    if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                        $('#cssmenu ul ul:visible').slideUp('normal');
+                        checkElement.slideDown('normal');
+                    }
+                    if ($(this).closest('li').find('ul').children().length == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="cabecera">
+            <div id="logo">
+                <p id="titulo">trivial wars</p>
+            </div>
+            <div id="userSession" align="right">
+                <p class="textoUsuario">¡¡Bienvenido Usuario!!
+                    <input id="closeSessionButton" value="cerrar sesion" onmouseover="document.getElementById('sablelaser').play()"/></p>
+            </div>
+        </div>
+
+        <div id="cuerpo" align="center">
+            <div id="trailer" align="center">
+                <video width="720" height="440" autoplay muted loop>
+                    <source src="resources/video/Recorte4-StarWarsVI.mp4" type="video/mp4">
+                </video>
+            </div>
+
+            <div id="menu">
+                <div>
+                    <a href="board/board.html"><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">crear partida</button></a>
+                    <button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">unirse a partida</button>
+                </div><br>
+                <div>
+                   <button id="configButton" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">configuracion del juego</button>
+                    <button id="aboutButton" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">sobre nosotros</button>
+                </div>
+            </div>
+
+            <div id="dialogAbout" title="Sobre Nosotros">
+                <div id="about" align="center">
+                    <h4 id="titleAbout">Acerca de</h4>
+                    <div id="info">
+                        <img id="image" src="resources/images/ewok.jpg"/>
+                        <div id="text">
+                            <h3>Simulacion del juego de la oca y el trivial<br/>
+                                con tematica star wars<br/>
+                                realizado por:<br/>
+                                todos los derechos reservados<br/>
+                                version 1.0<br/>
+                                Este producto se considera software<br/>
+                                libre para el uso de cualquier usuario<br/>
+                                Copyright 2014 TEAM WARS Corporation</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="dialogConfig" title="Configuracion">
+                <div id="config" align="center">
+                    <h4 id="titleConfig">Configuracion</h4>
+                    <div id="menuConfig">
+                        <table>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="checkboxG1" id="checkboxG1" class="css-checkbox"/>
+                                    <label for="checkboxG1" class="css-label">Musica</label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="checkbox" name="checkboxG2" id="checkboxG2" class="css-checkbox" checked="checked"/>
+                                    <label for="checkboxG2" class="css-label">Sonidos</label>
+                                </td>
+                            </tr>
+                        </table>
+                        <div id='cssmenu'>
+                            <ul>
+                                <li class='has-sub'><a><span>Selecciona un idioma</span></a>
+                                    <ul>
+                                        <li><a href='#'><span>español</span></a></li>
+                                        <li><a href='#'><span>inglés</span></a></li>
+                                        <li class='last'><a href='#'><span>francés</span></a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <hr width="100%"/>
+
+        <div id="pie"> 
+            <audio id="sablelaser" src="resources/audio/saber1.wav"></audio>
+            <audio src="resources/audio/mainTheme.wav" controls="controls" autoplay></audio>
+        </div>
+
+    </body>
+</html>

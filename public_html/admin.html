@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
+        <link rel="stylesheet" href="resources/css/player/admin.css" />
+        <script src="resources/js/libs/jquery-1.9.0/jquery.min.js"></script>
+        <title>Trivial Wars</title>
+    </head>
+    <body>
+        <div id="cabecera">
+            <div id="logo">
+                <p id="titulo">trivial wars</p>
+            </div>
+            <div id="userSession" align="right">
+                <p class="textoUsuario">¡¡Bienvenido Administrador!!
+                    <input id="closeSessionButton" value="cerrar sesion" onmouseover="document.getElementById('sablelaser').play()"/></p>
+            </div>
+        </div>
+        
+        <div id="cuerpo" align="center">
+    <div id="trailer" align="center">
+        <video width="720" height="440" autoplay muted loop>
+            <source src="resources/video/Recorte4-StarWarsVI.mp4" type="video/mp4">
+        </video>
+    </div>
+
+    <div id="menu">
+        <div>
+            <a href=""><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">modificar usuario</button></a>
+            <button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">borrar usuario</button>
+        </div><br>
+        <div>
+            <a href=""><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">bloquear usuario</button></a>
+            <a href=""><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">borrar partida</button></a>
+        </div>
+    </div>
+</div>
+<hr width="100%">
+
+<div id="pie"> 
+    <audio id="sablelaser" src="resources/audio/saber1.wav"></audio>
+    <audio src="resources/audio/mainTheme.wav" controls="controls" autoplay></audio>
+</div>
+        
+    </body>
+</html>
