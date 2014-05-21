@@ -17,6 +17,20 @@ body{
     color: yellow;
     font-size: 22px;
     font-family: "starwars2";
+    display: none;
+}
+.jugadores{
+    float: right;
+    width: 35%;
+    border: 1px solid green;
+    color: yellow;
+    font-size: 32px;
+}
+.yes{
+    height: 50%;
+}
+.tds{
+    width: 100%;
 }
 td{
     width: 80px;
@@ -102,7 +116,6 @@ td{
 
 .other{
     border: 1px solid green;
-
 }
 
 #marcadorP{

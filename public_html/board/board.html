@@ -104,21 +104,40 @@
                 </tr>
             </tbody>
         </table>
-        <table id="questions">
+
+        <table class="other" id="questions">
+            <tbody>
+                <tr>
+                    <td class="tds"><p id="question">¿Cual era el anterior nombre de Darth Vader?</p></td>
+                </tr>
+                <tr>
+                    <td class="tds"><p onclick="comprobarRespuesta(this)" class="other" id="resp1">Obi Wan Kenobi</p></td>
+                </tr>
+                <tr>
+                    <td class="tds"><p onclick="comprobarRespuesta(this)" class="other" id="resp2">Anakin Skywalker</p></td>
+                </tr>
+                <tr>
+                    <td class="tds"><p onclick="comprobarRespuesta(this)" class="other" id="resp3">Luke Skywalker</p></td>
+                </tr>                
+            </tbody>
+        </table>
+        <table class="jugadores">
             <tr>
-                <td><p id="question">¿Cual era el anterior nombre de Darth Vader?</p></td>
+                <td class="yes"><p class="other">Jugador 1</p></td><td class="yes"><img id="ficha1" src="../resources/images/FICHAdarthvader.png"/></td>
             </tr>
             <tr>
-                <td><p onclick="comprobarRespuesta(this)" class="other" id="resp1">Obi Wan Kenobi</p></td>
+                <td ><p class="other">Jugador 2</p><img id="ficha2" src="../resources/images/FICHAemperador.png"/></td>
+            </tr>
+        </table>
+        <table class="jugadores">
+            <tr>
+                <td><p class="other">Jugador 3</p><img id="ficha3" src="../resources/images/FICHAhansolo.png"/></td>
             </tr>
             <tr>
-                <td><p onclick="comprobarRespuesta(this)" class="other" id="resp2">Anakin Skywalker</p></td>
-            </tr>
-            <tr>
-                <td><p onclick="comprobarRespuesta(this)" class="other" id="resp3">Luke Skywalker</p></td>
-            </tr>       
+                <td><p class="other">Jugador 4</p><img id="ficha4" src="../resources/images/FICHAr2d2.png"/></td>
+            </tr>                
         </table>
         <input id="respuestaCorrecta" type="hidden" value=""/>
-            <button onclick="comprobarPregunta();">Cambio Pregunta</button>
+        <!--<button onclick="comprobarPregunta();">Cambio Pregunta</button>-->
     </body>
 </html>

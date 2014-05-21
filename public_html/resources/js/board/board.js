@@ -3,6 +3,7 @@ var contador = 0;
 var velocidad = 2000;
 var aux = false;
 var pregunta;
+var respuestaCorrecta = false;
 
 
 //Casillas Actuales de cada jugador
@@ -137,15 +138,19 @@ function moverFicha(next) {
     var position = $("#" + next).position();
     //$("#ficha1").animate({top: position.top, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
     //alert("el turno es de : " + turno);
-    switch(turno){
-        case "#ficha1": $(turno).animate({top: position.top, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-                        break;
-        case "#ficha2": $(turno).animate({top: position.top, left: position.left+40}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-                        break;
-        case "#ficha3": $(turno).animate({top: position.top+40, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-                        break;
-        case "#ficha4": $(turno).animate({top: position.top+40, left: position.left+40}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-            
+    switch (turno) {
+        case "#ficha1":
+            $(turno).animate({top: position.top, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
+            break;
+        case "#ficha2":
+            $(turno).animate({top: position.top, left: position.left + 40}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
+            break;
+        case "#ficha3":
+            $(turno).animate({top: position.top + 40, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
+            break;
+        case "#ficha4":
+            $(turno).animate({top: position.top + 40, left: position.left + 40}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
+
     }
     //alert("salgo de mover ficha");
 }
@@ -176,16 +181,20 @@ function respuestaAleatoria(ind, data) {
 
 }
 
+
 function comprobarRespuesta(respuesta) {
     var respCorrecta = $("#respuestaCorrecta").val();
     if (respuesta.id === respCorrecta) {
-        alert("CORRECTOOOOO");
+        respuestaCorrecta = true;
+        respuestaEsCorrecta();
     } else {
-        alert("CACACAAAAAAAAA");
+        respuestaCorrecta = false;
+        respuestaIncorrecta();
     }
+    alert("salgo, valor de respuestaCorrecta" + respuestaCorrecta);
 }
 
-function comprobarPregunta(){
+function comprobarPregunta() {
     var id = Math.floor((Math.random() * 7) + 1);
     $("#idQuestion").val(id);
     $.ajax({
@@ -203,6 +212,43 @@ function comprobarPregunta(){
             alert("error");
         }
     });
+}
+
+function respuestaEsCorrecta() {
+    document.getElementById("mensajeP").innerHTML = "¡¡¡ Respuesta correcta !!!";
+
+    if (turno == "#ficha1") {
+        document.getElementById("marcadorP").innerHTML = "Vuelve a tirar jugador 1";
+    }
+    if (turno == "#ficha2") {
+        document.getElementById("marcadorP").innerHTML = "Vuelve a tirar jugador 2";
+    }
+    if (turno == "#ficha3") {
+        document.getElementById("marcadorP").innerHTML = "Vuelve a tirar jugador 3";
+    }
+    if (turno == "#ficha4") {
+        document.getElementById("marcadorP").innerHTML = "Vuelve a tirar jugador 4";
+    }
+}
+
+function respuestaIncorrecta() {
+    document.getElementById("mensajeP").innerHTML = "¡¡¡ Respuesta incorrecta !!!";
+    if (turno === "#ficha1") {
+        turno = "#ficha2";
+        document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+    }
+    else if (turno === "#ficha2") {
+        turno = "#ficha3";
+        document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+    }
+    else if (turno === "#ficha3") {
+        turno = "#ficha4";
+        document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+    }
+    else if (turno === "#ficha4") {
+        turno = "#ficha1";
+        document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+    }
 }
 
 $(document).ready(function() {
@@ -231,6 +277,22 @@ $(document).ready(function() {
             clearInterval(id);
             var random = Math.floor((Math.random() * 6) + 1);
             $("#imagenDado").attr("src", "../resources/images/" + random + ".png");
+
+            $("#marcadorP").css('color', 'r');
+            if (turno === "#ficha1") {
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+            }
+            else if (turno === "#ficha2") {
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+            }
+            else if (turno === "#ficha3") {
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+            }
+            else if (turno === "#ficha4") {
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+            }
+
+
             if (turno === "#ficha1") {
                 casillaActual = casillaActualJ1;
             }
@@ -247,24 +309,19 @@ $(document).ready(function() {
             /* 
              * Si la casilla destino es una casilla especial, vamos a comprobarJugada(int num_casilla)
              */
-            ///alert("holitaaaaaaaaaaaaa");
-            //alert("casillaActual"+casillaActual);
-            //alert("next"+next);
             moverFicha(next);
-            //alert("ya he ejecutado moverFicha");
-            //sleep(100);
-            //alert("hola");
             if (next == 5 || next == 6 || next == 12 || next == 14 || next == 23 || next == 26 || next == 32 || next == 41 || next == 50 || next == 56) {
-                //alert("voy a comprobar jugada");
                 comprobarJugada(next); /* Comprobamos la jugada con ese valor */
                 aux = true;
             }
             else {
-                cambioTurno = true;
                 document.getElementById("mensajeP").innerHTML = "Contesta a la pregunta";
+                comprobarPregunta();
+                setTimeout(function() {
+                    $("#questions").css('display', 'block');
+                }, 2000);
             }
             velocidad = 2000;
-//                        alert("valor de cambioTurno" + cambioTurno);
             if (turno === "#ficha1") {
                 casillaActualJ1 = next;
             }
@@ -278,44 +335,14 @@ $(document).ready(function() {
                 casillaActualJ4 = next;
             }
 
-            if (cambioTurno) {
-                if (turno === "#ficha1") {
-                    //casillaActualJ1 = next;
-                    turno = "#ficha2";
-                }
-                else if (turno === "#ficha2") {
-                    //casillaActualJ2 = next;
-                    turno = "#ficha3";
-                }
-                else if (turno === "#ficha3") {
-                    //casillaActualJ3 = next;
-                    turno = "#ficha4";
-                }
-                else if (turno === "#ficha4") {
-                    // casillaActualJ3 = next;
-                    turno = "#ficha1";
-                }
-                //alert("variable turno: " + turno);
-                if (turno == "#ficha1") {
-                    document.getElementById("marcadorP").innerHTML = "Turno de Jugador 1";
-                }
-                if (turno == "#ficha2") {
-                    document.getElementById("marcadorP").innerHTML = "Turno de Jugador 2";
-                }
-                if (turno == "#ficha3") {
-                    document.getElementById("marcadorP").innerHTML = "Turno de Jugador 3";
-                }
-                if (turno == "#ficha4") {
-                    document.getElementById("marcadorP").innerHTML = "Turno de Jugador 4";
-                }
-            }
             if (aux) {
                 setTimeout(function() {
                     document.getElementById("mensajeP").innerHTML = "Vuelve a tirar";
                 }, 6000);
             }
-        }, 1500);
 
+        }, 1500);
     });
+
 });
 
