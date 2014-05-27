@@ -4,6 +4,8 @@ var velocidad = 2000;
 var aux = false;
 var pregunta;
 var respuestaCorrecta = false;
+var dadoActivo = true;
+var dadoActivoPorTurno = true;
 
 
 //Casillas Actuales de cada jugador
@@ -15,11 +17,10 @@ var casillaActualJ4 = 0;
 var turno = "#ficha1";
 var cambioTurno = false;
 //var entroComprobarJugada = false;
-//            alert("EMPIEZOOOOO");
 
 function comprobarJugada(num_casilla) {
 
-    //DE NAVE A NAVE Y TIRO PQ ME SALE
+    //NAVES (DE NAVE A NAVE Y TIRO PORQUE ME SALE)
     if (num_casilla === 5) {
         velocidad = 4000;
         next = 14;
@@ -48,27 +49,29 @@ function comprobarJugada(num_casilla) {
     }
     if (num_casilla === 41) {
         velocidad = 4000;
-        //alert("De nave a nave y tiro pq me sale");
         next = 50;
         moverFicha(next);
         document.getElementById("mensajeP").innerHTML = "De nave a nave y tiro porque me sale";
     }
     if (num_casilla === 50) {
         velocidad = 4000;
-        //alert("De nave a nave y tiro pq me sale");
         next = 59;
         moverFicha(next);
         document.getElementById("mensajeP").innerHTML = "De nave a nave y tiro porque me sale";
     }
     if (num_casilla === 59) {
         velocidad = 4000;
-        //alert("¡¡¡ HAS MUERTO, VUELVES A EMPEZAR !!!");
         next = 63;
         moverFicha(next);
         document.getElementById("mensajeP").innerHTML = "¡¡¡ Has ganado !!!";
     }
+//    if (num_casilla === 63) {//CASILLA META
+//        velocidad = 4000;
+//        moverFicha(next);
+//        document.getElementById("mensajeP").innerHTML = "¡¡¡ Has ganado !!!";
+//    }
 
-    //DE PUENTE A PUENTE Y TIRO PQ ME DA LA CORRIENTE
+    //PUENTES (DE PUENTE A PUENTE Y TIRO PORQUE ME DA LA CORRIENTE)
     if (num_casilla === 6) {
         velocidad = 4000;
         next = 12;
@@ -82,8 +85,7 @@ function comprobarJugada(num_casilla) {
         document.getElementById("mensajeP").innerHTML = "De puente a puente y tiro porque me da la corriente";
     }
 
-
-    //DE DADO A DADO Y TIRO PQ ME HA TOCADO
+    //DADOS (DE DADO A DADO Y TIRO PORQUE ME HA TOCADO)
     if (num_casilla === 26) {
         velocidad = 4000;
         next = 53;
@@ -111,6 +113,12 @@ function comprobarJugada(num_casilla) {
         document.getElementById("mensajeP").innerHTML = "Has caído en la posada, 2 turnos sin tirar";
     }
 
+    //POZO
+    if (num_casilla === 31) {
+        velocidad = 4000;
+        document.getElementById("mensajeP").innerHTML = "Has caído en el pozo, 2 turnos sin tirar";
+    }
+
     //LABERINTO
     if (num_casilla === 42) {
         velocidad = 4000;
@@ -125,19 +133,11 @@ function comprobarJugada(num_casilla) {
         document.getElementById("mensajeP").innerHTML = "Has caído en la carcel, 3 turnos sin tirar";
     }
 
-    //POZO
-    if (num_casilla === 31) {
-        velocidad = 4000;
-        document.getElementById("mensajeP").innerHTML = "Has caído en la pozo, 2 turnos sin tirar";
-    }
 }
 
 function moverFicha(next) {
-    //alert("entro en mover ficha");
     casillaActual = next;
     var position = $("#" + next).position();
-    //$("#ficha1").animate({top: position.top, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-    //alert("el turno es de : " + turno);
     switch (turno) {
         case "#ficha1":
             $(turno).animate({top: position.top, left: position.left}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
@@ -150,9 +150,7 @@ function moverFicha(next) {
             break;
         case "#ficha4":
             $(turno).animate({top: position.top + 40, left: position.left + 40}, velocidad); /* el segundo parámetro de animate, en este caso 1000, sirve para ralentizar el movimiento. */
-
     }
-    //alert("salgo de mover ficha");
 }
 
 function respuestaAleatoria(ind, data) {
@@ -229,6 +227,7 @@ function respuestaEsCorrecta() {
     if (turno == "#ficha4") {
         document.getElementById("marcadorP").innerHTML = "Vuelve a tirar jugador 4";
     }
+    dadoActivo = true;
 }
 
 function respuestaIncorrecta() {
@@ -249,10 +248,10 @@ function respuestaIncorrecta() {
         turno = "#ficha1";
         document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
     }
+    dadoActivo = true;
 }
 
 $(document).ready(function() {
-
     posicionInicial = $("#" + casillaActual).position();
     $("ficha1").position({top: $("#" + casillaActual).position().top, left: $("#" + casillaActual).position().left});
 //                $("ficha2").position({top: posicionInicial.top, left: posicionInicial.left});
@@ -265,83 +264,96 @@ $(document).ready(function() {
     }
 
     $("#dado").click(function() {
-        aux = false;
-        cambioTurno = false;
+        //alert("pulso!!!");
+        //alert("Valor ahora de dadoActivoPorTurno: " + dadoActivoPorTurno);
+        if (dadoActivo) {//Si el dado está activo, es porque no tenemos ninguna pregunta que contestar.
 
-        var id = setInterval(function() {
-            var random = Math.floor((Math.random() * 10) + 1);
-            $("#imagenDado").attr("src", "../resources/images/" + random + ".png");
-        }, 50);
+            if (dadoActivoPorTurno) {//Si dadoActivoPorTurno, se pondrá a TRUE, a final del turno para no poder pulsar en medio de un turno.
+                //alert("dadoActivoPorTurno ANTES: " + dadoActivoPorTurno);
+                dadoActivoPorTurno = false;
+                //alert("dadoActivoPorTurno DESPUES: " + dadoActivoPorTurno);
+                aux = false;
+                cambioTurno = false;
 
-        setTimeout(function() {
-            clearInterval(id);
-            var random = Math.floor((Math.random() * 6) + 1);
-            $("#imagenDado").attr("src", "../resources/images/" + random + ".png");
+                var id = setInterval(function() {
+                    var random = Math.floor((Math.random() * 10) + 1);
+                    $("#imagenDado").attr("src", "../resources/images/" + random + ".png");
+                }, 50);
 
-            $("#marcadorP").css('color', 'r');
-            if (turno === "#ficha1") {
-                document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
-            }
-            else if (turno === "#ficha2") {
-                document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
-            }
-            else if (turno === "#ficha3") {
-                document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
-            }
-            else if (turno === "#ficha4") {
-                document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
-            }
-
-
-            if (turno === "#ficha1") {
-                casillaActual = casillaActualJ1;
-            }
-            else if (turno === "#ficha2") {
-                casillaActual = casillaActualJ2;
-            }
-            else if (turno === "#ficha3") {
-                casillaActual = casillaActualJ3;
-            }
-            else if (turno === "#ficha4") {
-                casillaActual = casillaActualJ4;
-            }
-            next = casillaActual + random;
-            /* 
-             * Si la casilla destino es una casilla especial, vamos a comprobarJugada(int num_casilla)
-             */
-            moverFicha(next);
-            if (next == 5 || next == 6 || next == 12 || next == 14 || next == 23 || next == 26 || next == 32 || next == 41 || next == 50 || next == 56) {
-                comprobarJugada(next); /* Comprobamos la jugada con ese valor */
-                aux = true;
-            }
-            else {
-                document.getElementById("mensajeP").innerHTML = "Contesta a la pregunta";
-                comprobarPregunta();
                 setTimeout(function() {
-                    $("#questions").css('display', 'block');
-                }, 2000);
-            }
-            velocidad = 2000;
-            if (turno === "#ficha1") {
-                casillaActualJ1 = next;
-            }
-            else if (turno === "#ficha2") {
-                casillaActualJ2 = next;
-            }
-            else if (turno === "#ficha3") {
-                casillaActualJ3 = next;
-            }
-            else if (turno === "#ficha4") {
-                casillaActualJ4 = next;
-            }
+                    clearInterval(id);
+                    var random = Math.floor((Math.random() * 6) + 1);
+                    $("#imagenDado").attr("src", "../resources/images/" + random + ".png");
 
-            if (aux) {
-                setTimeout(function() {
-                    document.getElementById("mensajeP").innerHTML = "Vuelve a tirar";
-                }, 6000);
-            }
+                    $("#marcadorP").css('color', 'r');
+                    if (turno === "#ficha1") {
+                        document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+                    }
+                    else if (turno === "#ficha2") {
+                        document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+                    }
+                    else if (turno === "#ficha3") {
+                        document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+                    }
+                    else if (turno === "#ficha4") {
+                        document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+                    }
 
-        }, 1500);
+
+                    if (turno === "#ficha1") {
+                        casillaActual = casillaActualJ1;
+                    }
+                    else if (turno === "#ficha2") {
+                        casillaActual = casillaActualJ2;
+                    }
+                    else if (turno === "#ficha3") {
+                        casillaActual = casillaActualJ3;
+                    }
+                    else if (turno === "#ficha4") {
+                        casillaActual = casillaActualJ4;
+                    }
+                    next = casillaActual + random;
+                    /* 
+                     * Si la casilla destino es una casilla especial, vamos a comprobarJugada(int num_casilla)
+                     */
+                    moverFicha(next);
+                    if (next == 5 || next == 6 || next == 12 || next == 14 || next == 23 || next == 26 || next == 32 || next == 41 || next == 50 || next == 56) {
+                        comprobarJugada(next); /* Comprobamos la jugada con ese valor */
+                        aux = true;
+                    }
+                    else {
+                        dadoActivo = false; //Para que el usuario no pueda clicar el dado
+                        document.getElementById("mensajeP").innerHTML = "Contesta a la pregunta";
+                        comprobarPregunta();
+                        setTimeout(function() {
+                            $("#questions").css('display', 'block');
+                        }, 2000);
+                    }
+                    velocidad = 2000;
+                    if (turno === "#ficha1") {
+                        casillaActualJ1 = next;
+                    }
+                    else if (turno === "#ficha2") {
+                        casillaActualJ2 = next;
+                    }
+                    else if (turno === "#ficha3") {
+                        casillaActualJ3 = next;
+                    }
+                    else if (turno === "#ficha4") {
+                        casillaActualJ4 = next;
+                    }
+
+                    if (aux) {
+                        setTimeout(function() {
+                            document.getElementById("mensajeP").innerHTML = "Vuelve a tirar";
+                        }, 6000);
+                    }
+
+                    alert("fin de turno");
+                    dadoActivoPorTurno = true;
+                }, 1500);
+            }
+        }
     });
 
 });
