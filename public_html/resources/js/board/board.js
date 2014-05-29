@@ -3,9 +3,10 @@ var contador = 0;
 var velocidad = 2000;
 var aux = false;
 var pregunta;
-var respuestaCorrecta = false;
-var dadoActivo = true;
-var dadoActivoPorTurno = true;
+var respuestaCorrecta = false;             //respuesta correcta si o no
+var dadoActivo = true;                     //hasta que no conteste la pregunta el dado NO estará activo
+var dadoActivoPorTurno = true;             //hasta que no se termine ese turno el dado NO estará activo
+var arr5 = [19, 4, 3, 2, 1, 5, 9, 8, 6];   //secuencia predefinida de movimientos del dado
 
 
 //Casillas Actuales de cada jugador
@@ -13,11 +14,25 @@ var casillaActualJ1 = 0;
 var casillaActualJ2 = 0;
 var casillaActualJ3 = 0;
 var casillaActualJ4 = 0;
+var contad = 1;
 
-var turno = "#ficha1";
-var cambioTurno = false;
-//var entroComprobarJugada = false;
+//Variables para guardar los turnos de los jugadores (por si alguno de ellos tiene alguno pendiente)
+var contadorTurnosJ1 = 0;
+var contadorTurnosJ2 = 0;
+var contadorTurnosJ3 = 0;
+var contadorTurnosJ4 = 0;
 
+var turno = "#ficha1";         //qué ficha tiene el turno ACTUALMENTE
+var cambioTurno = false;       //cuándo realizamos el cambio de turno       
+
+//Para decrementar un turno en caso de ternerlos acumulados
+//function turnos(contadorTurnos) {
+//    if (contadorTurnos > 0) {
+//        contadorTurnos--;
+//    }
+//}
+
+//Comprobamos la jugada según la casilla especial
 function comprobarJugada(num_casilla) {
 
     //NAVES (DE NAVE A NAVE Y TIRO PORQUE ME SALE)
@@ -109,7 +124,20 @@ function comprobarJugada(num_casilla) {
 
     //POSADA
     if (num_casilla === 19) {
+//        alert("dos turnos sin tirar");
         velocidad = 4000;
+        if (turno === "#ficha1") {
+            contadorTurnosJ1 = contadorTurnosJ1 + 2;
+        }
+        else if (turno === "#ficha2") {
+            contadorTurnosJ2 = contadorTurnosJ2 + 2;
+        }
+        else if (turno === "#ficha3") {
+            contadorTurnosJ3 = contadorTurnosJ3 + 2;
+        }
+        else if (turno === "#ficha4") {
+            contadorTurnosJ4 = contadorTurnosJ4 + 2;
+        }
         document.getElementById("mensajeP").innerHTML = "Has caído en la posada, 2 turnos sin tirar";
     }
 
@@ -133,8 +161,31 @@ function comprobarJugada(num_casilla) {
         document.getElementById("mensajeP").innerHTML = "Has caído en la carcel, 3 turnos sin tirar";
     }
 
+    //EN LAS CASILLAS ESPECIALES COMO NO TIENEN PREGUNTA, REALIZAMOS EL CAMBIO DE TURNO AQUÍ !!!
+    if (num_casilla === 19 || num_casilla === 31 || num_casilla === 42 || num_casilla === 52) {
+//        alert("CAMBIO TURNO");
+        if (turno === "#ficha1") {
+            turno = "#ficha2";
+            document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+        }
+        else if (turno === "#ficha2") {
+            turno = "#ficha3";
+            document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+        }
+        else if (turno === "#ficha3") {
+            turno = "#ficha4";
+            document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+        }
+        else if (turno === "#ficha4") {
+            turno = "#ficha1";
+            document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+        }
+        dadoActivo = true;
+    }
+
 }
 
+//Para realizar el movimiento de la ficha a la casilla destino
 function moverFicha(next) {
     casillaActual = next;
     var position = $("#" + next).position();
@@ -153,6 +204,7 @@ function moverFicha(next) {
     }
 }
 
+//Generación de respuesta aleatoria para cambiar las respuestas de orden
 function respuestaAleatoria(ind, data) {
     pregunta = data;
     switch (ind) {
@@ -189,7 +241,7 @@ function comprobarRespuesta(respuesta) {
         respuestaCorrecta = false;
         respuestaIncorrecta();
     }
-    alert("salgo, valor de respuestaCorrecta" + respuestaCorrecta);
+//    alert("salgo, valor de respuestaCorrecta" + respuestaCorrecta);
 }
 
 function comprobarPregunta() {
@@ -316,20 +368,96 @@ $(document).ready(function() {
                     /* 
                      * Si la casilla destino es una casilla especial, vamos a comprobarJugada(int num_casilla)
                      */
-                    moverFicha(next);
-                    if (next == 5 || next == 6 || next == 12 || next == 14 || next == 23 || next == 26 || next == 32 || next == 41 || next == 50 || next == 56) {
-                        comprobarJugada(next); /* Comprobamos la jugada con ese valor */
-                        aux = true;
+
+//                    alert("Imprimo contadores de mis fichas: ");
+//                    alert("contadorTurnosJ1: " + contadorTurnosJ1);
+//                    alert("contadorTurnosJ2: " + contadorTurnosJ2);
+//                    alert("contadorTurnosJ3: " + contadorTurnosJ3);
+//                    alert("contadorTurnosJ4: " + contadorTurnosJ4);
+
+//                    alert(turno);
+                    //REALIZO MOVIMIENTO SI MI CONTADOR ESTÁ A 0, SINO 
+                    if (contadorTurnosJ1 == 0 && turno === "#ficha1" ||
+                            contadorTurnosJ2 == 0 && turno === "#ficha2" ||
+                            contadorTurnosJ3 == 0 && turno === "#ficha3" ||
+                            contadorTurnosJ4 == 0 && turno === "#ficha4") {
+
+//                        alert("me meto IF PQ CONTADOR ESTA A 0");
+//                        alert("Realizo movimiento");
+                        if (contad == 1) {
+                            next = 19;
+                        }
+                        if (contad == 2) {
+                            next = 1;
+                        }
+                        if (contad == 3) {
+                            next = 2;
+                        }
+                        if (contad == 4) {
+                            next = 3;
+                        }
+                        if (contad == 5) {
+                            next = 1;
+                        }
+                        if (contad == 6) {
+                            next = 1;
+                        }
+                        if (contad == 7) {
+                            next = 2;
+                        }
+                        if (contad == 8) {
+                            next = 1;
+                        }
+                        contad++;
+                        moverFicha(next);
+                        if (next == 5 || next == 6 || next == 12 || next == 14 || next == 19 || next == 23 || next == 26 || next == 31 || next == 32 || next == 41 || next == 42 || next == 50 || next == 52 || next == 53 || next == 56 || next == 59 || next == 63) {
+                            comprobarJugada(next); /* Comprobamos la jugada con ese valor */
+                            if (next !== 19 || next !== 31 || next !== 42 || next !== 52) {
+                                aux = true;
+                            }
+                        }
+                        else {
+                            dadoActivo = false; //Para que el usuario no pueda clicar el dado
+                            document.getElementById("mensajeP").innerHTML = "Contesta a la pregunta";
+                            comprobarPregunta();
+                            setTimeout(function() {
+                                $("#questions").css('display', 'block');
+                            }, 2000);
+                        }
+                        velocidad = 2000;
+                    } else {
+//                        alert("me meto por ELSE");
+//                        alert("decremento a mi contador");
+                        //Sino es 0, es que tiene turnos pendientes, ese turno lo utilizo para decrementarle uno al contador.
+                        if (turno === "#ficha1") {
+//                            alert("entro por aqui?");
+                            contadorTurnosJ1--;
+                            document.getElementById("mensajeP").innerHTML = "Te quedan " + contadorTurnosJ1 + " para mover";
+                            turno = "#ficha2";
+                            document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+//                            alert("pongo el mensaje");
+                        }
+                        else if (turno === "#ficha2") {
+                            contadorTurnosJ2--;
+                            document.getElementById("mensajeP").innerHTML = "Te quedan " + contadorTurnosJ2 + " para mover";
+                            turno = "#ficha3";
+                            document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+                        }
+                        else if (turno === "#ficha3") {
+                            contadorTurnosJ3--;
+                            document.getElementById("mensajeP").innerHTML = "Te quedan " + contadorTurnosJ3 + " para mover";
+                            turno = "#ficha4";
+                            document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+                        }
+                        else if (turno === "#ficha4") {
+                            contadorTurnosJ4--;
+                            document.getElementById("mensajeP").innerHTML = "Te quedan " + contadorTurnosJ4 + " para mover";
+                            turno = "#ficha1";
+                            document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+                        }
+                        dadoActivo = true;
+//                        alert("salgo del else");
                     }
-                    else {
-                        dadoActivo = false; //Para que el usuario no pueda clicar el dado
-                        document.getElementById("mensajeP").innerHTML = "Contesta a la pregunta";
-                        comprobarPregunta();
-                        setTimeout(function() {
-                            $("#questions").css('display', 'block');
-                        }, 2000);
-                    }
-                    velocidad = 2000;
                     if (turno === "#ficha1") {
                         casillaActualJ1 = next;
                     }
@@ -349,7 +477,7 @@ $(document).ready(function() {
                         }, 6000);
                     }
 
-                    alert("fin de turno");
+//                    alert("fin de turno");
                     dadoActivoPorTurno = true;
                 }, 1500);
             }
