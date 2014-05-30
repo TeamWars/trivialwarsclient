@@ -167,3 +167,13 @@ fieldset > *{
 #regOK{
     display: none;
 }
+
+
+#gameData{
+    float: left;
+    width: 50%;
+}
+#chips{
+    float: right;
+    width: 50%;
+}
