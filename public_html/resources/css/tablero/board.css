@@ -20,11 +20,12 @@ body{
     display: none;
 }
 .jugadores{
-    float: right;
-    width: 35%;
+    top: 50%;
+    width: 29%;
     border: 1px solid green;
-    color: yellow;
+    color: blueviolet;
     font-size: 32px;
+    margin-right: 17px;
 }
 .yes{
     height: 50%;
