@@ -13,7 +13,7 @@ body{
 #questions{
     float: right;
     width: 20%;
-    margin-right: 20px;
+    margin-right: 39px;
     color: yellow;
     font-size: 22px;
     font-family: "starwars2";
@@ -22,7 +22,7 @@ body{
 .jugadores{
     top: 50%;
     width: 29%;
-    border: 1px solid green;
+    //border: 1px solid green;
     color: blueviolet;
     font-size: 32px;
     margin-right: 17px;
@@ -58,6 +58,39 @@ td{
     position: absolute;
     //position: relative;
 }*/
+
+/*#f1 {
+    position: absolute;
+    top: 76%;
+    left: 70%;
+    //top: 50px;
+    //left: 50px;
+}
+
+#f2 {
+    position:absolute;
+    top: 76%;
+    left: 8%;
+        top: 50px;
+        right: 50px;
+}
+
+#f3 {
+    position:absolute;
+    top: 76%;
+    left: 4.5%;
+        bottom: 50px;
+        right: 50px;
+}
+
+#f4 {
+    position:absolute;
+    top: 76%;
+    left: 3%;
+        bottom: 50px;
+        left: 50px;
+}*/
+
 
 #ficha1 {
     position: absolute;
@@ -116,7 +149,7 @@ td{
 }
 
 .other{
-    border: 1px solid green;
+    //border: 1px solid green;
 }
 
 #marcadorP{
