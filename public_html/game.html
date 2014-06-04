@@ -27,86 +27,91 @@
 
         </style>
         <script type="text/javascript">
+            var fichaSelec = "";
+            var nombrePartida = "";
+            var numJugadores = "";
+            
+            function fichaSeleccionada(nombre, fichero) {
+                $('#nameFich').val(nombre);
+                fichaSelec = fichero;
+            }
+
+            function confirmarDatosPartida() {
+                var valido = validarDatos();
+                if (valido) {
+                    numJugadores = numeroJugadores();
+                    var datos = {"jugadores" : numJugadores, "ficha" : fichaSelec, "nombre" : nombrePartida};
+                    $.ajax({
+                            url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/game/create',
+                            method: 'POST',
+                            dataType: 'json',
+                            data: datos,
+                            success: function(data) {
+                                if (data) {
+                                    
+                                }
+                            },
+                            error: function(error) {
+                                alert("error");
+                            }
+                        });
+                } else {
+                    alert("faltan datos por concretar");
+                }
+            }
+            
+            function numeroJugadores(){
+                var boton = document.getElementsByName("radiog_lite");
+                
+                if(boton[0].checked){
+                    return 2;
+                }
+                if(boton[1].checked){
+                    return 3;
+                }
+                if(boton[2].checked){
+                    return 4;
+                    
+                }
+            }
+
+            function validarDatos() {
+                nombrePartida = $("#gameName").val();
+                if(nombre === ""){
+                    alert("falta el nombre");
+                    return false;
+                }
+                if (fichaSelec === ""){
+                    alert("falta la ficha");
+                    return false;
+                }
+                return true;
+            }
+            
+
             $(document).ready(function() {
 
-//                $("#formUsuarios").off().on("submit", function(e) {
-//                    e.preventDefault();
-//                    var datosValidos = validarFormulario();
-//                    if (datosValidos) {
-//                        $.ajax({
-//                            url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/login',
-//                            method: 'POST',
-//                            dataType: 'json',
-//                            data: $("#formUsuarios").serialize(),
-//                            success: function(data) {
-//                                if (data) {
-//                                    if (data[0].rol == "ROLE_ADMIN") {
-//                                        location.assign("/TrivialWarsClient/public_html/admin.html");
-//                                    } else {
-//                                        location.assign("/TrivialWarsClient/public_html/user.html");
-//                                    }
-//                                }
-//                            },
-//                            error: function(error) {
-//                                alert("error");
-//                            }
-//                        });
-//                    }
-//                });
-
-//                $("#dialog").dialog({
-//                    autoOpen: false,
-//                    width: 450,
-//                    buttons: [{
-//                            text: "ok",
-//                            click: function() {
-//                                nuevoUsuario();
-////                                $(this).dialog("close");
-//                            }}, {
-//                            text: "cancelar",
-//                            click: function() {
-//                                $(this).dialog("close");
-//                            }
-//                        }]
-//                });
-//                // Link to open the dialog
-//                $("#register").click(function(event) {
-//                    $("#dialog").dialog("open");
-//                });
-//                // Hover states on the static widgets
-//                $("#dialog-link, #icons li").hover(
-//                        function() {
-//                            $(this).addClass("ui-state-hover");
-//                        },
-//                        function() {
-//                            $(this).removeClass("ui-state-hover");
-//                        }
-//                );
+                $('#cssmenu ul ul li:odd').addClass('odd');
+                $('#cssmenu ul ul li:even').addClass('even');
+                $('#cssmenu > ul > li > a').click(function() {
+                    $('#cssmenu li').removeClass('active');
+                    $(this).closest('li').addClass('active');
+                    var checkElement = $(this).next();
+                    if ((checkElement.is('ul')) && (checkElement.is(':visible'))) {
+                        $(this).closest('li').removeClass('active');
+                        checkElement.slideUp('normal');
+                    }
+                    if ((checkElement.is('ul')) && (!checkElement.is(':visible'))) {
+                        $('#cssmenu ul ul:visible').slideUp('normal');
+                        checkElement.slideDown('normal');
+                    }
+                    if ($(this).closest('li').find('ul').children().length == 0) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                });
             });
-//            function validarFormulario() {
-//                var user = $("#user").val();
-//                var pass = $("#password").val();
-//                var valido = true;
-//                if (user === "" | !user) {
-//                    $("#user").css('border', 'solid 4px red');
-//                    $("#user").css('border-radius', '15px');
-//                    valido = false;
-//                } else {
-//                    $("#user").css('border', 'none');
-//                    $("#user").css('border-radius', '0px');
-//                }
-//                if (pass === "" | !pass) {
-//                    $("#password").css('border', 'solid 4px red');
-//                    $("#password").css('border-radius', '15px');
-//                    valido = false;
-//                } else {
-//                    $("#password").css('border', 'none');
-//                    $("#password").css('border-radius', '0px');
-//                }
-//                return valido;
-//            }
-
-
 
         </script>
     </head>
@@ -116,56 +121,92 @@
                 <h1 id="titulo">trivial wars</h1>
             </div>
         </div>
-<!--        <div id="registroUsuarios" align="center">
-            <form id="formUsuarios">
-                Usuario:<input type = 'text' id="user" name = 'user' title="Se necesita un nombre de usuario" required/><br>
-                Password:<input type = 'password' id="password" name = 'password' title="Se necesita introducir una contraseña" required/><br>
-                <p id="textRemember"><input id="remember" name="remember" type="checkbox" style="text-align: left;"/>Recordarme</p>
-                <input id="loginButton" type="submit" class="botonUsuarios" value="login" /><br>
-                <a href="#"><p id="register">¿Aún no tienes cuenta? Regístrate</p></a>
-            </form>
-        </div>-->
 
-<div id="chips"> 
-    <table>
-        <tr>
-            <td>Elegir ficha:<span id="chooseChip"></span></td>
-        </tr>
-        <tr>
-            <td><img src="resources/images/FICHAc3po.png"/></td>
-            <td><img src="resources/images/FICHAdarthvader.png"/></td>
-            <td><img src="resources/images/FICHAemperador.png"/></td>
-            <td><img src="resources/images/FICHAhansolo.png"/></td>
-        </tr>
-        <tr>
-            <td><img src="resources/images/FICHAleia.png"/></td>
-            <td><img src="resources/images/FICHAluke.png"/></td>
-            <td><img src="resources/images/FICHAobiwan.png"/></td>
-            <td><img src="resources/images/FICHAr2d2.png"/></td>
-        </tr>
-    </table>
-</div>
-<div id="gameData">
-    Nombre Partida:<br/><input type = 'text' id="user" name = 'user' title="Se necesita un nombre de partida" required/><br>
-    Numero Jugadores:<br/><input type = 'password' id="password" name = 'password' title="Se necesita introducir numero de jugadores" required/><br>
-</div>
+        <div id="gameData">
+            <table>
+                <tr>
+                    <td>
+                        Nombre Partida:<br/>
+                        <input type = 'text' id="gameName" name = 'gameName' title="Se necesita un nombre de partida" required/>    
+                    </td>
+                    <td>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td class="gamers" colspan="3">
+                                        <h4>Numero de Jugadores</h4>                            
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="gamers">
+                                        <input type="radio" name="radiog_lite" id="radio1" class="css-checkbox" >
+                                        <label for="radio1" class="css-label">2</label>
+                                    </td>
+                                    <td class="gamers">
+                                        <input type="radio" name="radiog_lite" id="radio2" class="css-checkbox" checked="checked">
+                                        <label for="radio2" class="css-label">3</label>
+                                    </td>
+                                    <td class="gamers">
+                                        <input type="radio" name="radiog_lite" id="radio3" class="css-checkbox">
+                                        <label for="radio3" class="css-label">4</label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button id="confirm" onclick="confirmarDatosPartida()" onmouseover="document.getElementById('sablelaser').play()">Confirmar Datos</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id="waitPlayers">
+                            <p>Esperando Jugadores</p>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
-<!--        <div id="dialog" title="Registro">
-            <p id="titleReg" class="validateTips">Todos los campos son requeridos.</p>
-            <form id="regUsuarios">
-                <fieldset id="registro">
-                    <label for="name">Nombre (*)</label><br/>
-                    <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister"><br/>
-                    <label for="password">Contraseña (*)</label><br/>
-                    <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
-                    <label for="email">E-mail</label><br/>
-                    <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
-                </fieldset>
-                <fieldset id="regOK">
-                    <label>¡Enhorabuena! Eres parte de la galaxia...</label>
-                </fieldset>
-            </form>
-        </div>-->
+        <div id="chips"> 
+            <table>
+                <tr>
+                    <td colspan="4">Elegir ficha:
+                        <input type = 'text' id="nameFich" name = 'nameFich' readonly/>    </td>
+                </tr>
+                <tr>
+                    <td class="chipsImages" id="1"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('c3po', 'c3po.jpg')" src="resources/images/c3po.jpg"/><span>C3PO</span></a></td>
+                    <td class="chipsImages" id="2"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('darth vader', 'darthvader.jpg')" src="resources/images/darthvader.jpg"/><span>Darth Vader</span></a></td>
+                    <td class="chipsImages" id="3"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('darth sidious', 'darthsidious.jpg')" src="resources/images/darthsidious.jpg"/><span>Darth Sidious</span></a></td>
+                    <td class="chipsImages" id="4"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('han solo', 'hansolo.jpg')" src="resources/images/hansolo.jpg"/><span>Han Solo</span></a></td>
+                </tr>
+                <tr>
+                    <td class="chipsImages" id="5"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('leia', 'leia.jpg')" src="resources/images/leia.jpg"/><span>Leia</span></a></td>
+                    <td class="chipsImages" id="6"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('luke', 'luke.jpg')" src="resources/images/luke.jpg"/><span>Luke</span></a></td>
+                    <td class="chipsImages" id="7"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('obi-wan', 'obiwan.jpg')" src="resources/images/obiwan.jpg"/><span>Obi-Wan</span></a></td>
+                    <td class="chipsImages" id="8"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('r2d2', 'r2d2.jpg')" src="resources/images/r2d2.jpg"/><span>R2D2</span></a></td>
+                </tr>
+            </table>
+        </div>
+
+        <!--        <div id="dialog" title="Registro">
+                    <p id="titleReg" class="validateTips">Todos los campos son requeridos.</p>
+                    <form id="regUsuarios">
+                        <fieldset id="registro">
+                            <label for="name">Nombre (*)</label><br/>
+                            <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                            <label for="password">Contraseña (*)</label><br/>
+                            <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                            <label for="email">E-mail</label><br/>
+                            <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                        </fieldset>
+                        <fieldset id="regOK">
+                            <label>¡Enhorabuena! Eres parte de la galaxia...</label>
+                        </fieldset>
+                    </form>
+                </div>-->
 
 
     </body>

@@ -158,7 +158,7 @@
             <form id="formUsuarios">
                 Usuario:<input type = 'text' id="user" name = 'user' title="Se necesita un nombre de usuario" required/><br>
                 Password:<input type = 'password' id="password" name = 'password' title="Se necesita introducir una contraseña" required/><br>
-                <p id="textRemember"><input id="remember" name="remember" type="checkbox" style="text-align: left;"/>Recordarme</p>
+                <!--<p id="textRemember"><input id="remember" name="remember" type="checkbox" style="text-align: left;"/>Recordarme</p>-->
                 <input id="loginButton" type="submit" class="botonUsuarios" value="login" /><br>
                 <a href="#"><p id="register">¿Aún no tienes cuenta? Regístrate</p></a>
             </form>
@@ -169,11 +169,11 @@
             <form id="regUsuarios">
                 <fieldset id="registro">
                     <label for="name">Nombre (*)</label><br/>
-                    <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                    <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister" title="Es obligatorio un nombre" required><br/>
                     <label for="password">Contraseña (*)</label><br/>
-                    <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                    <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister" title="Es obligatoria una contraseña" required><br/>
                     <label for="email">E-mail</label><br/>
-                    <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister"><br/>
+                    <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister" title="Se requiere un email" required><br/>
                 </fieldset>
                 <fieldset id="regOK">
                     <label>¡Enhorabuena! Eres parte de la galaxia...</label>

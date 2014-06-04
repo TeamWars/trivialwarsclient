@@ -10,6 +10,24 @@
         <title>Trivial Wars</title>
         <script type="text/javascript">
             $(document).ready(function() {
+                $.ajax({
+                    url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/auth',
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.autenticado) {
+                            $(".textoUsuario").text("!!Bienvenido " + data.usuario + "¡¡")
+                        } else {
+                            window.location = "/TrivialWarsClient/public_html/index.html";
+                        }
+                    },
+                    error: function(error) {
+                        alert("error");
+                        window.location = "/TrivialWarsClient/public_html/index.html";
+                    }
+                });
+
+
                 $("#dialogAbout").dialog({
                     autoOpen: false,
                     width: 900,
@@ -30,6 +48,17 @@
                             }
                         }]
                 });
+
+                $("#dialogGame").dialog({
+                    autoOpen: false,
+                    width: 700,
+                    buttons: [{
+                            text: "unirse",
+                            click: function() {
+                                $(this).dialog("close");
+                            }
+                        }]
+                });
                 // Link to open the dialog
                 $("#aboutButton").click(function(event) {
                     $("#dialogAbout").dialog("open");
@@ -37,6 +66,10 @@
                 $("#configButton").click(function(event) {
                     $("#dialogConfig").dialog("open");
                 });
+                $("#joinGame").click(function(event) {
+                    $("#dialogGame").dialog("open");
+                });
+
                 // Hover states on the static widgets
                 $("#dialog-link, #icons li").hover(
                         function() {
@@ -68,16 +101,20 @@
                     }
                 });
             });
+
+            function comprobarPartida() {
+                $("#chips").css("display","block");
+            }
         </script>
     </head>
-    <body>
+    <body onload="comprobarUsuario()">
         <div id="cabecera">
             <div id="logo">
                 <p id="titulo">trivial wars</p>
             </div>
             <div id="userSession" align="right">
-                <p class="textoUsuario">¡¡Bienvenido Usuario!!
-                    <input id="closeSessionButton" value="cerrar sesion" onmouseover="document.getElementById('sablelaser').play()"/></p>
+                <p class="textoUsuario"></p>
+                <input id="closeSessionButton" value="cerrar sesion" onmouseover="document.getElementById('sablelaser').play()"/>
             </div>
         </div>
 
@@ -90,11 +127,11 @@
 
             <div id="menu">
                 <div>
-                    <a href="board/board.html"><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">crear partida</button></a>
-                    <button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">unirse a partida</button>
+                    <a href="game.html"><button class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">crear partida</button></a>
+                    <button id="joinGame" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">unirse a partida</button>
                 </div><br>
                 <div>
-                   <button id="configButton" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">configuracion del juego</button>
+                    <button id="configButton" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">configuracion del juego</button>
                     <button id="aboutButton" class="botonMenu" onmouseover="document.getElementById('sablelaser').play()">sobre nosotros</button>
                 </div>
             </div>
@@ -148,6 +185,33 @@
                             </ul>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div id="dialogGame" title="unirse a partida">
+                <div id="nameGame">
+                    nombre partida:<br/>
+                    <input type = 'text' id="idGame" name = 'idGame' title="Se necesita un nombre de partida" required/>    
+                    <button id="check" onclick="comprobarPartida();">comprobar</button>
+                </div>
+                <div id="chips">
+                    <table>
+                        <tr>
+                            <td colspan="4">elegir ficha:</td>
+                        </tr>
+                        <tr>
+                            <td class="chipsImages" id="1"><a href="#" class="Ntooltip"><img src="resources/images/c3po.jpg"/><span>C3PO</span></a></td>
+                            <td class="chipsImages" id="2"><a href="#" class="Ntooltip"><img src="resources/images/darthvader.jpg"/><span>Darth Vader</span></a></td>
+                            <td class="chipsImages" id="3"><a href="#" class="Ntooltip"><img src="resources/images/darthsidious.jpg"/><span>Darth Sidious</span></a></td>
+                            <td class="chipsImages" id="4"><a href="#" class="Ntooltip"><img src="resources/images/hansolo.jpg"/><span>Han Solo</span></a></td>
+                        </tr>
+                        <tr>
+                            <td class="chipsImages" id="5"><a href="#" class="Ntooltip"><img src="resources/images/leia.jpg"/><span>Leia</span></a></td>
+                            <td class="chipsImages" id="6"><a href="#" class="Ntooltip"><img src="resources/images/luke.jpg"/><span>Luke</span></a></td>
+                            <td class="chipsImages" id="7"><a href="#" class="Ntooltip"><img src="resources/images/obiwan.jpg"/><span>Obi-Wan</span></a></td>
+                            <td class="chipsImages" id="8"><a href="#" class="Ntooltip"><img src="resources/images/r2d2.jpg"/><span>R2D2</span></a></td>
+                        </tr>
+                    </table>
                 </div>
             </div>
 
