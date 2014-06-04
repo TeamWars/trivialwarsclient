@@ -1,7 +1,8 @@
-@font-face { 
-    font-family: 'starwars2'; 
-    src: url("<?php echo $view['assets']->getUrl('bundles/trivial/fonts/BAUHS93.TTF'); ?>") format('ttf'); 
-} 
+@font-face
+{
+    font-family: "starwars2";
+    src: url("../..//fonts/starjedi/Starjedi.ttf");
+}
 body{
     background: url('../..//images/fondo.jpg') no-repeat center center fixed;
 }
@@ -21,11 +22,12 @@ body{
 }
 .jugadores{
     top: 50%;
-    width: 29%;
+    width: 26%;
     //border: 1px solid green;
     color: blueviolet;
-    font-size: 32px;
-    margin-right: 17px;
+    margin-right: 12px;
+    font-size: 20px;
+    font-family: "starwars2";
 }
 .yes{
     height: 50%;
@@ -157,7 +159,7 @@ td{
         width: 20%; */
     /*margin-left: 10px;*/
     color: yellow;
-    font-size: 32px;
+    font-size: 22px;
     font-family: "starwars2";
 }
 
@@ -172,6 +174,6 @@ td{
         width: 20%;
         margin-right: 20px;*/
     color: yellow;
-    font-size: 32px;
+    font-size: 22px;
     font-family: "starwars2";
 }

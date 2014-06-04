@@ -32,6 +32,7 @@ var cambioTurno = false;       //cuándo realizamos el cambio de turno
 
 
 $(document).ready(function() {
+    
     posicionInicial = $("#" + casillaActual).position();
     $("ficha1").position({top: $("#" + casillaActual).position().top, left: $("#" + casillaActual).position().left});// DESCOMENTAR
 //                $("ficha2").position({top: posicionInicial.top, left: posicionInicial.left});
@@ -112,30 +113,30 @@ $(document).ready(function() {
                             contadorTurnosJ3 == 0 && turno === "#ficha3" ||
                             contadorTurnosJ4 == 0 && turno === "#ficha4") {
                         //alert("me meto por aquí para hacer el movimiento: (turno de: "+turno+" )");
-                        if (contad == 1) {
-                            next = 19;
-                        }
-                        if (contad == 2) {
-                            next = 1;
-                        }
-                        if (contad == 3) {
-                            next = 2;
-                        }
-                        if (contad == 4) {
-                            next = 3;
-                        }
-                        if (contad == 5) {
-                            next = 9;
-                        }
-                        if (contad == 6) {
-                            next = 10;
-                        }
-                        if (contad == 7) {
-                            next = 13;
-                        }
-                        if (contad == 8) {
-                            next = 28;
-                        }
+//                        if (contad == 1) {
+//                            next = 19;
+//                        }
+//                        if (contad == 2) {
+//                            next = 1;
+//                        }
+//                        if (contad == 3) {
+//                            next = 2;
+//                        }
+//                        if (contad == 4) {
+//                            next = 3;
+//                        }
+//                        if (contad == 5) {
+//                            next = 9;
+//                        }
+//                        if (contad == 6) {
+//                            next = 10;
+//                        }
+//                        if (contad == 7) {
+//                            next = 13;
+//                        }
+//                        if (contad == 8) {
+//                            next = 28;
+//                        }
                         contad++;
                         moverFicha(next);
                         if (next == 5 || next == 6 || next == 12 || next == 14 || next == 19 || next == 23 || next == 26 || next == 31 || next == 32 || next == 41 || next == 42 || next == 50 || next == 52 || next == 53 || next == 56 || next == 59 || next == 63) {
