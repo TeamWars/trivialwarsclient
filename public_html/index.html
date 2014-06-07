@@ -40,7 +40,7 @@
                             data: $("#formUsuarios").serialize(),
                             success: function(data) {
                                 if (data) {
-                                    if (data[0].rol == "ROLE_ADMIN") {
+                                    if (data[0].rol === "ROLE_ADMIN") {
                                         location.assign("/TrivialWarsClient/public_html/admin.html");
                                     } else {
                                         location.assign("/TrivialWarsClient/public_html/user.html");

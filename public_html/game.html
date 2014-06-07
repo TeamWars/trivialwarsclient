@@ -30,6 +30,7 @@
             var fichaSelec = "";
             var nombrePartida = "";
             var numJugadores = "";
+            var idUsuario = "";
             
             function fichaSeleccionada(nombre, fichero) {
                 $('#nameFich').val(nombre);
@@ -39,26 +40,46 @@
             function confirmarDatosPartida() {
                 var valido = validarDatos();
                 if (valido) {
-                    numJugadores = numeroJugadores();
-                    var datos = {"jugadores" : numJugadores, "ficha" : fichaSelec, "nombre" : nombrePartida};
-                    $.ajax({
+                    alert("me meto por aqui");
+                    recuperarSesion();
+                } else {
+                    alert("faltan datos por concretar");
+                }
+            }
+            
+            function recuperarSesion(){
+                $.ajax({
+                    url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/auth',
+                    method: 'POST',
+                    dataType: 'json',
+                    success: function(data) {
+                        alert("segundo"+data.id);
+                        numJugadores = numeroJugadores();
+                        var datos = {"jugadores" : numJugadores, "ficha" : fichaSelec, "nombre" : nombrePartida, "id" : data.id};
+                        if (data.autenticado) {
+                            $.ajax({
                             url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/game/create',
                             method: 'POST',
                             dataType: 'json',
                             data: datos,
                             success: function(data) {
                                 if (data) {
-                                    
+                                    alert("dpm");
                                 }
                             },
                             error: function(error) {
                                 alert("error");
                             }
                         });
-                } else {
-                    alert("faltan datos por concretar");
-                }
-            }
+                        } else {
+                            window.location = "/TrivialWarsClient/public_html/index.html";
+                        }
+                    },
+                    error: function(error) {
+                        window.location = "/TrivialWarsClient/public_html/index.html";
+                    }
+                });
+            }            
             
             function numeroJugadores(){
                 var boton = document.getElementsByName("radiog_lite");
@@ -77,7 +98,7 @@
 
             function validarDatos() {
                 nombrePartida = $("#gameName").val();
-                if(nombre === ""){
+                if(nombrePartida === ""){
                     alert("falta el nombre");
                     return false;
                 }

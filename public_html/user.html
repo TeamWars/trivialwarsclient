@@ -9,14 +9,18 @@
         <link href="resources/css/dialog/jquery-ui-1.10.4.custom.css" rel="stylesheet">
         <title>Trivial Wars</title>
         <script type="text/javascript">
+             var usuarioActual;
+             var idPartida;
             $(document).ready(function() {
+                   
                 $.ajax({
                     url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/auth',
                     method: 'POST',
                     dataType: 'json',
                     success: function(data) {
                         if (data.autenticado) {
-                            $(".textoUsuario").text("!!Bienvenido " + data.usuario + "¡¡")
+                            usuarioActual = data.usuario;
+                            $(".textoUsuario").text("!!Bienvenido " + data.usuario["username"] + "¡¡")
                         } else {
                             window.location = "/TrivialWarsClient/public_html/index.html";
                         }
@@ -52,12 +56,12 @@
                 $("#dialogGame").dialog({
                     autoOpen: false,
                     width: 700,
-                    buttons: [{
-                            text: "unirse",
-                            click: function() {
-                                $(this).dialog("close");
-                            }
-                        }]
+//                    buttons: [{
+//                            text: "unirse",
+//                            click: function() {
+//                                $(this).dialog("close");
+//                            }
+//                        }]
                 });
                 // Link to open the dialog
                 $("#aboutButton").click(function(event) {
@@ -103,11 +107,84 @@
             });
 
             function comprobarPartida() {
-                $("#chips").css("display","block");
+                var nombreJuego = $("#idGame").val();
+                var datos = {"nombre": nombreJuego};
+                $.ajax({
+                    url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/namegame',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: datos,
+                    success: function(data) {
+                        if (data.estado) {
+                            fichasDisponibles(data.fichas);
+                            idPartida = data.idPartida;
+                            $("#dialogGame").dialog("close");
+                            $("#chips").css("display", "block");
+                            $("#dialogGame").dialog({
+                                autoOpen: false,
+                                width: 700,
+                                buttons: [{
+                                        text: "unirse",
+                                        click: function() {
+                                            if (todoSeleccionado) {
+                                                unirse();
+                                            } else {
+                                                alert("Selecciona una ficha");
+                                            }
+                                        }
+                                    }]
+                            });
+                            $("#dialogGame").dialog("open");
+                        } else {
+                            $("#chips").css("display", "none");
+                        }
+                    },
+                    error: function(error) {
+                        alert("error");
+                    }
+                });
+            }
+
+            var nombreFicha;
+            var todoSeleccionado = false;
+            var nombreJuego;
+
+            function fichaSeleccionada(nombre, fichero) {
+                nombreFicha = fichero;
+                todoSeleccionado = true;
+                $("img").css("opacity", "0.5");
+                palabras = fichero.split(".");
+                nombre = palabras[0];
+                $("#" + nombre).find("img").css("opacity", "1");
+            }
+
+            function fichasDisponibles(fichas) {
+                for (i = 0; i < fichas.length; i++) {
+                    nombreFicha = fichas[i].ficha;
+                    palabras = nombreFicha.split(".");
+                    ficha = palabras[0];
+                    $("#" + ficha).children("a").remove("a");
+                }
+            }
+
+            function unirse() {
+                datos = {"ficha": nombreFicha, "idUsuario" : usuarioActual["id"], "idPartida" : idPartida};
+                $.ajax({
+                    url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/join',
+                    method: 'POST',
+                    dataType: 'json',
+                    data: datos,
+                    success: function(data) {
+                        alert("esperando usuario");
+                    },
+                    error: function(error) {
+                       alert("error");
+                    }
+                });
             }
         </script>
     </head>
-    <body onload="comprobarUsuario()">
+    <body>
         <div id="cabecera">
             <div id="logo">
                 <p id="titulo">trivial wars</p>
@@ -200,16 +277,16 @@
                             <td colspan="4">elegir ficha:</td>
                         </tr>
                         <tr>
-                            <td class="chipsImages" id="1"><a href="#" class="Ntooltip"><img src="resources/images/c3po.jpg"/><span>C3PO</span></a></td>
-                            <td class="chipsImages" id="2"><a href="#" class="Ntooltip"><img src="resources/images/darthvader.jpg"/><span>Darth Vader</span></a></td>
-                            <td class="chipsImages" id="3"><a href="#" class="Ntooltip"><img src="resources/images/darthsidious.jpg"/><span>Darth Sidious</span></a></td>
-                            <td class="chipsImages" id="4"><a href="#" class="Ntooltip"><img src="resources/images/hansolo.jpg"/><span>Han Solo</span></a></td>
+                            <td class="chipsImages" id="c3po"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('c3po', 'c3po.jpg')" src="resources/images/c3po.jpg"/><span>C3PO</span></a></td>
+                            <td class="chipsImages" id="darthvader"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('darth vader', 'darthvader.jpg')" src="resources/images/darthvader.jpg"/><span>Darth Vader</span></a></td>
+                            <td class="chipsImages" id="darthsidious"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('darth sidious', 'darthsidious.jpg')" src="resources/images/darthsidious.jpg"/><span>Darth Sidious</span></a></td>
+                            <td class="chipsImages" id="hansolo"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('han solo', 'hansolo.jpg')" src="resources/images/hansolo.jpg"/><span>Han Solo</span></a></td>
                         </tr>
                         <tr>
-                            <td class="chipsImages" id="5"><a href="#" class="Ntooltip"><img src="resources/images/leia.jpg"/><span>Leia</span></a></td>
-                            <td class="chipsImages" id="6"><a href="#" class="Ntooltip"><img src="resources/images/luke.jpg"/><span>Luke</span></a></td>
-                            <td class="chipsImages" id="7"><a href="#" class="Ntooltip"><img src="resources/images/obiwan.jpg"/><span>Obi-Wan</span></a></td>
-                            <td class="chipsImages" id="8"><a href="#" class="Ntooltip"><img src="resources/images/r2d2.jpg"/><span>R2D2</span></a></td>
+                            <td class="chipsImages" id="leia"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('leia', 'leia.jpg')" src="resources/images/leia.jpg"/><span>Leia</span></a></td>
+                            <td class="chipsImages" id="luke"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('luke', 'luke.jpg')" src="resources/images/luke.jpg"/><span>Luke</span></a></td>
+                            <td class="chipsImages" id="obiwan"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('obi-wan', 'obiwan.jpg')" src="resources/images/obiwan.jpg"/><span>Obi-Wan</span></a></td>
+                            <td class="chipsImages" id="r2d2"><a href="#" class="Ntooltip"><img onclick="fichaSeleccionada('r2d2', 'r2d2.jpg')" src="resources/images/r2d2.jpg"/><span>R2D2</span></a></td>
                         </tr>
                     </table>
                 </div>
@@ -220,7 +297,7 @@
 
         <div id="pie"> 
             <audio id="sablelaser" src="resources/audio/saber1.wav"></audio>
-            <audio src="resources/audio/mainTheme.wav" controls="controls" autoplay></audio>
+            <audio src="resources/audio/mainTheme.wav" controls="controls" ></audio>
         </div>
 
     </body>

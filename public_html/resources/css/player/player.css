@@ -437,5 +437,5 @@ a.Ntooltip:hover span {
 }
 
 .ui-dialog-buttonset > button{
-    display: none;
+    /*display: none;*/
 }
