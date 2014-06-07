@@ -31,7 +31,7 @@
 
                 $("#formUsuarios").off().on("submit", function(e) {
                     e.preventDefault();
-                    var datosValidos = validarFormulario();
+                    var datosValidos = validar("#user","#password",null); 
                     if (datosValidos) {
                         $.ajax({
                             url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/login',
@@ -61,7 +61,6 @@
                             text: "ok",
                             click: function() {
                                 nuevoUsuario();
-//                                $(this).dialog("close");
                             }}, {
                             text: "cancelar",
                             click: function() {
@@ -83,25 +82,35 @@
                         }
                 );
             });
-            function validarFormulario() {
-                var user = $("#user").val();
-                var pass = $("#password").val();
+            
+            function validar(username,password,email) {
+                var user = $(username).val();
+                var pass = $(password).val();
+                var mail = $(email).val();
                 var valido = true;
                 if (user === "" | !user) {
-                    $("#user").css('border', 'solid 4px red');
-                    $("#user").css('border-radius', '15px');
+                    $(username).css('border', 'solid 4px red');
+                    $(username).css('border-radius', '15px');
                     valido = false;
                 } else {
-                    $("#user").css('border', 'none');
-                    $("#user").css('border-radius', '0px');
+                    $(username).css('border', 'none');
+                    $(username).css('border-radius', '0px');
                 }
                 if (pass === "" | !pass) {
-                    $("#password").css('border', 'solid 4px red');
-                    $("#password").css('border-radius', '15px');
+                    $(password).css('border', 'solid 4px red');
+                    $(password).css('border-radius', '15px');
                     valido = false;
                 } else {
-                    $("#password").css('border', 'none');
-                    $("#password").css('border-radius', '0px');
+                    $(password).css('border', 'none');
+                    $(password).css('border-radius', '0px');
+                }
+                if (!mail | mail === "" | !mail) {
+                    $(email).css('border', 'solid 4px red');
+                    $(email).css('border-radius', '15px');
+                    valido = false;
+                } else {
+                    $(email).css('border', 'none');
+                    $(email).css('border-radius', '0px');
                 }
                 return valido;
             }
@@ -111,11 +120,10 @@
                 usuario = $("#nameReg").val();
                 password = $("#passwordReg").val();
                 email = $("#emailReg").val();
-//                
-//                $("#regUsuarios").off().on("submit", function(e) {
-//                    e.preventDefault();
-//                    var datosValidos = validarFormulario();
-                if (true) {
+                
+                var datosValidos = validar("#nameReg","#passwordReg","#emailReg");
+                
+                if (datosValidos) {
                     $.ajax({
                         url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/register',
                         method: 'POST',
@@ -143,7 +151,6 @@
                         }
                     });
                 }
-//                });
             }
 
         </script>

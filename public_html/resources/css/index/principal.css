@@ -163,6 +163,9 @@ fieldset > *{
 #registro{
     display: block;
 }
+#registro > input{
+    font-family: sans-serif;
+}
 
 #regOK{
     display: none;

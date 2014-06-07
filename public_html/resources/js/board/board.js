@@ -409,7 +409,10 @@ function comprobarJugada(num_casilla) {
 
 //Para realizar el movimiento de la ficha a la casilla destino
 function moverFicha(next) {
+    $("#"+casillaActual).css("background-color","rgba(0,0,0,0)");
     casillaActual = next;
+    $("#"+casillaActual).css("background-color","rgba(255,255,0,0.7)");
+    $("img").css("opacity","1");
     var position = $("#" + next).position();
     switch (turno) {
         case "#ficha1":
