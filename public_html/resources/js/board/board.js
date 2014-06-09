@@ -110,14 +110,14 @@ $(document).ready(function() {
                         casillaActual = casillaActualJ4;
                     }
 
-
-                    alert("casilla que voy a cambiar"+estadoFichas[casillaActual]);
+                    alert("casilla que voy a cambiar" + estadoFichas[casillaActual]);
                     estadoFichas[casillaActual]--;
+                    alert("DECREMENTOOOOOOOO");
                     if (estadoFichas[casillaActual] === 0) {
                         $("#" + casillaActual).css("background-color", "rgba(0,0,0,0)");
                         $("img").css("opacity", "1");
                     }
-                    alert("despues"+estadoFichas[casillaActual]);
+                    alert("despues" + estadoFichas[casillaActual]);
                     //Casilla destino
                     next = casillaActual + random;
 
@@ -130,7 +130,7 @@ $(document).ready(function() {
                             contadorTurnosJ4 == 0 && turno === "#ficha4") {
                         //alert("me meto por aquí para hacer el movimiento: (turno de: "+turno+" )");
                         if (contad == 1) {
-                            next = 63;
+                            next = 62;
                         }
                         if (contad == 2) {
                             next = 58;
@@ -148,6 +148,7 @@ $(document).ready(function() {
                             setTimeout(function() {
                                 diferencia = next - 63;
                                 next = 63 - diferencia;
+                                alert("hago primer movimiento");
                                 moverFicha(next);
                                 if (next == 5 || next == 6 || next == 12 || next == 14 || next == 19 || next == 23 || next == 26 || next == 31 || next == 32 || next == 41 || next == 42 || next == 50 || next == 52 || next == 53 || next == 56 || next == 59 || next == 63) {
                                     comprobarJugada(next); //Comprobación de jugada con esa casilla especial
@@ -165,6 +166,7 @@ $(document).ready(function() {
                                 }
                                 velocidad = 2000;
 
+                                alert("INCREMENTOOOOO");
                                 estadoFichas[next]++;
                                 if (estadoFichas[next] > 0) {
                                     $("#" + estadoFichas[i]).css("background-color", "rgba(255,255,0,0.7)");
@@ -202,7 +204,7 @@ $(document).ready(function() {
                                     $("#questions").css('display', 'block');
                                 }, 2000);
                             }
-                            alert("casilla a CAMBIAR"+next);
+                            alert("casilla a CAMBIAR" + next);
                             velocidad = 2000;
                             alert("llego?¿");
                             alert(estadoFichas[next]);
@@ -347,19 +349,19 @@ $(document).ready(function() {
 
     //AQUI HACER JNO
     $("#dialogGanador").dialog({
-            autoOpen: false,
-            width: 450,
-            buttons: [{
-                    text: "Volver al menú principal",
-                    click: function() {
-                        //alert("que pasa chavalote, has ganado");
-                        location.assign("/TrivialWarsClient/public_html/user.html");
-                    }}]
+        autoOpen: false,
+        width: 450,
+        buttons: [{
+                text: "Volver al menú principal",
+                click: function() {
+                    //alert("que pasa chavalote, has ganado");
+                    location.assign("/TrivialWarsClient/public_html/user.html");
+                }}]
 //                    text: "cancelar",
 //                    click: function() {
 //                        $(this).dialog("close");
 //                    }
-        });
+    });
 });
 
 
