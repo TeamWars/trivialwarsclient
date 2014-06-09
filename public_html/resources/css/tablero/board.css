@@ -177,3 +177,14 @@ td{
     font-size: 22px;
     font-family: "starwars2";
 }
+
+#fichaGanador{
+    height: 100%;
+    width: 100%;
+}
+
+#titleGanador, #titleGanador2{
+    color: yellow;
+    font-size: 22px;
+    font-family: "starwars2";
+}
