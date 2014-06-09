@@ -4,15 +4,20 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" type="image/png" href="resources/images/favicon.ico" />
         <link rel="stylesheet" href="resources/css/player/player.css" />
+        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
         <script src="resources/js/jqueryui/jquery-1.10.2.js"></script>
         <script src="resources/js/jqueryui/jquery-ui-1.10.4.custom.js"></script>
         <link href="resources/css/dialog/jquery-ui-1.10.4.custom.css" rel="stylesheet">
         <title>Trivial Wars</title>
         <script type="text/javascript">
-             var usuarioActual;
-             var idPartida;
+            var usuarioActual;
+            var idPartida;
+            var nombreFicha;
+            var todoSeleccionado = false;
+            var nombreJuego;
+
             $(document).ready(function() {
-                   
+
                 $.ajax({
                     url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/auth',
                     method: 'POST',
@@ -107,7 +112,7 @@
             });
 
             function comprobarPartida() {
-                var nombreJuego = $("#idGame").val();
+                nombreJuego = $("#idGame").val();
                 var datos = {"nombre": nombreJuego};
                 $.ajax({
                     url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/namegame',
@@ -145,9 +150,6 @@
                 });
             }
 
-            var nombreFicha;
-            var todoSeleccionado = false;
-            var nombreJuego;
 
             function fichaSeleccionada(nombre, fichero) {
                 nombreFicha = fichero;
@@ -167,8 +169,14 @@
                 }
             }
 
+            var socket = io.connect("http://localhost:8080");
+
+            socket.on("comenzar_invitados", function(datos) {
+                window.location = "/TrivialWarsClient/public_html/board/board.html";
+            });
+
             function unirse() {
-                datos = {"ficha": nombreFicha, "idUsuario" : usuarioActual["id"], "idPartida" : idPartida};
+                datos = {"nombrePartida": nombreJuego, "ficha": nombreFicha, "nombreUsuario": usuarioActual["username"], "idUsuario": usuarioActual["id"], "idPartida": idPartida};
                 $.ajax({
                     url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/join',
                     method: 'POST',
@@ -176,9 +184,10 @@
                     data: datos,
                     success: function(data) {
                         alert("unido a partida - esperando...");
+                        socket.emit("unirse_partida", datos);
                     },
                     error: function(error) {
-                       alert("error");
+                        alert("error");
                     }
                 });
             }
