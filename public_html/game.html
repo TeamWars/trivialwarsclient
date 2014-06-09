@@ -31,6 +31,7 @@
             var nombrePartida = "";
             var numJugadores = "";
             var idUsuario = "";
+            var socket = io.connect("http://localhost:8080");
             
             function fichaSeleccionada(nombre, fichero) {
                 $('#nameFich').val(nombre);
@@ -74,6 +75,7 @@
                             success: function(data) {
                                 if (data) {
                                     alert("dpm");
+                                    socket.emit("crear_partida", {sala: nombrePartida});
                                 }
                             },
                             error: function(error) {
