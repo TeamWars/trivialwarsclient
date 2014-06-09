@@ -31,7 +31,7 @@
 
                 $("#formUsuarios").off().on("submit", function(e) {
                     e.preventDefault();
-                    var datosValidos = validar("#user","#password",null); 
+                    var datosValidos = validar("#user", "#password", null);
                     if (datosValidos) {
                         $.ajax({
                             url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/login',
@@ -82,8 +82,8 @@
                         }
                 );
             });
-            
-            function validar(username,password,email) {
+
+            function validar(username, password, email) {
                 var user = $(username).val();
                 var pass = $(password).val();
                 var mail = $(email).val();
@@ -104,13 +104,15 @@
                     $(password).css('border', 'none');
                     $(password).css('border-radius', '0px');
                 }
-                if (!mail | mail === "" | !mail) {
-                    $(email).css('border', 'solid 4px red');
-                    $(email).css('border-radius', '15px');
-                    valido = false;
-                } else {
-                    $(email).css('border', 'none');
-                    $(email).css('border-radius', '0px');
+                if (email !== null) {
+                    if (mail === "" | !mail) {
+                        $(email).css('border', 'solid 4px red');
+                        $(email).css('border-radius', '15px');
+                        valido = false;
+                    } else {
+                        $(email).css('border', 'none');
+                        $(email).css('border-radius', '0px');
+                    }
                 }
                 return valido;
             }
@@ -120,9 +122,9 @@
                 usuario = $("#nameReg").val();
                 password = $("#passwordReg").val();
                 email = $("#emailReg").val();
-                
-                var datosValidos = validar("#nameReg","#passwordReg","#emailReg");
-                
+
+                var datosValidos = validar("#nameReg", "#passwordReg", "#emailReg");
+
                 if (datosValidos) {
                     $.ajax({
                         url: 'http://localhost/TrivialWarsServer/web/app_dev.php/trivial/user/register',
