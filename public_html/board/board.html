@@ -4,11 +4,16 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" type="image/png" href="../resources/images/favicon.ico" />
         <link rel="stylesheet" href="../resources/css/tablero/board.css" />
+        <script src="../resources/js/common.js"></script>
+        <script src="http://localhost:8080/socket.io/socket.io.js"></script>
         <script src="../resources/js/libs/jquery-1.9.0/jquery.min.js"></script>
         <script src="../resources/js/board/board.js"></script>
+        <script src="../resources/js/jqueryui/jquery-1.10.2.js"></script>
+        <script src="../resources/js/jqueryui/jquery-ui-1.10.4.custom.js"></script>
+        <link href="../resources/css/dialog/jquery-ui-1.10.4.custom.css" rel="stylesheet">
         <title>Trivial Wars</title>
     </head>
-    <body>
+    <body onload="cargarDatos()">
         <input id="idQuestion" name="idQuestion" value="" type="hidden"/>
         <table id="board">
             <tbody>
@@ -121,7 +126,7 @@
                 </tr>                
             </tbody>
         </table>
-        <table class="jugadores" align="center">
+        <table class="jugadores" align="right">
             <tr>
                 <td>Jugador1<img id="f1" src="../resources/images/FICHAdarthvader.png"/></td>
                 <!--<td class="yes"><p class="other">Jugador 1</p></td><td class="yes"><img id="ficha1" src="../resources/images/FICHAdarthvader.png"/></td>-->
@@ -131,11 +136,37 @@
             <tr>
                 <!--<td><p class="other">Jugador 3</p><img id="ficha3" src="../resources/images/FICHAhansolo.png"/></td>-->
                 <td>Jugador3<img id="f3" src="../resources/images/FICHAhansolo.png"/></td>
-                 <!--<td><p class="other">Jugador 4</p><img id="ficha4" src="../resources/images/FICHAr2d2.png"/></td>-->
+                <!--<td><p class="other">Jugador 4</p><img id="ficha4" src="../resources/images/FICHAr2d2.png"/></td>-->
                 <td>Jugador4<img id="f4" src="../resources/images/FICHAr2d2.png"/></td>
             </tr>                
         </table>
         <input id="respuestaCorrecta" type="hidden" value=""/>
+
+
+        <div id="dialogGanador" align="center" title="ganador">
+            <p id="titleGanador">¡¡¡ Enhorabuena !!!</p>
+            <p id="titleGanador2">Has conquistado la galaxia</p>
+            <!--<img id="fichaGanador" src="../resources/images/GANADORdarthvader.png"/>-->
+            <!--<img id="fichaGanador" src="../resources/images/GANADORleia.png"/>-->
+            <!--<img id="fichaGanador" src="../resources/images/GANADORr2d2.gif"/>-->
+            <!--<img id="fichaGanador" src="../resources/images/GANADORluke.png"/>-->
+            <!--<img id="fichaGanador" src="../resources/images/GANADORobiwan.png"/>-->
+            <img id="fichaGanador" src="../resources/images/GANADORemperador.png"/>
+            <!--<img id="fichaGanador" src="../resources/images/GANADORluke.png"/>-->
+            <!--            <form id="regUsuarios">
+                            <fieldset id="registro">
+                                <label for="name">Nombre (*)</label><br/>
+                                <input type="text" name="nameReg" id="nameReg" class="text ui-widget-content ui-corner-all inputRegister" title="Es obligatorio un nombre" required><br/>
+                                <label for="password">Contraseña (*)</label><br/>
+                                <input type="password" name="passwordReg" id="passwordReg" value="" class="text ui-widget-content ui-corner-all inputRegister" title="Es obligatoria una contraseña" required><br/>
+                                <label for="email">E-mail</label><br/>
+                                <input type="text" name="emailReg" id="emailReg" value="" class="text ui-widget-content ui-corner-all inputRegister" title="Se requiere un email" required><br/>
+                            </fieldset>
+                            <fieldset id="regOK">
+                                <label>¡Enhorabuena! Eres parte de la galaxia...</label>
+                            </fieldset>
+                        </form>-->
+        </div>
         <!--<button onclick="comprobarPregunta();">Cambio Pregunta</button>-->
     </body>
 </html>

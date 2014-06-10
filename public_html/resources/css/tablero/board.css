@@ -3,6 +3,8 @@
     font-family: "starwars2";
     src: url("../..//fonts/starjedi/Starjedi.ttf");
 }
+
+
 body{
     background: url('../..//images/fondo.jpg') no-repeat center center fixed;
 }
@@ -21,6 +23,8 @@ body{
     display: none;
 }
 .jugadores{
+    border: 5px yellow groove;
+    background-image: url('../../images/fondoNegro4.jpg');
     top: 50%;
     width: 26%;
     //border: 1px solid green;
@@ -28,6 +32,7 @@ body{
     margin-right: 12px;
     font-size: 20px;
     font-family: "starwars2";
+    padding-left: 10px;
 }
 .yes{
     height: 50%;
@@ -161,6 +166,8 @@ td{
     color: yellow;
     font-size: 22px;
     font-family: "starwars2";
+    background-image: url('../../images/fondoNegro4.jpg');
+    border: 3px yellow ridge;
 }
 
 /*#board{
@@ -173,6 +180,19 @@ td{
     /*    float: right;
         width: 20%;
         margin-right: 20px;*/
+    color: yellow;
+    font-size: 22px;
+    font-family: "starwars2";
+    background-image: url('../../images/fondoNegro4.jpg');
+    border: 3px yellow ridge;
+}
+
+#fichaGanador{
+    height: 100%;
+    width: 100%;
+}
+
+#titleGanador, #titleGanador2{
     color: yellow;
     font-size: 22px;
     font-family: "starwars2";
