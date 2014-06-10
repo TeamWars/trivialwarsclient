@@ -596,6 +596,61 @@ function comprobarJugada(num_casilla) {
         }
 
     }
+
+
+
+    if (numeroJugadores === 3) {
+
+        //EN LAS CASILLAS ESPECIALES COMO NO TIENEN PREGUNTA, REALIZAMOS EL CAMBIO DE TURNO AQUÍ !!!
+        if (num_casilla === 19 || num_casilla === 31 || num_casilla === 42 || num_casilla === 52) {
+            if (turno === "#ficha1") {
+                turno = "#ficha2";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+            }
+            else if (turno === "#ficha2") {
+                turno = "#ficha3";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+            }
+            else if (turno === "#ficha3") {
+                turno = "#ficha1";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+            }
+            dadoActivo = true;
+        }
+
+    }
+
+    if (numeroJugadores === 4) {
+
+        //EN LAS CASILLAS ESPECIALES COMO NO TIENEN PREGUNTA, REALIZAMOS EL CAMBIO DE TURNO AQUÍ !!!
+        if (num_casilla === 19 || num_casilla === 31 || num_casilla === 42 || num_casilla === 52) {
+            if (turno === "#ficha1") {
+                turno = "#ficha2";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 2";
+            }
+            else if (turno === "#ficha2") {
+                turno = "#ficha3";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 3";
+            }
+            else if (turno === "#ficha3") {
+                turno = "#ficha4";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 4";
+            }
+            else if (turno === "#ficha4") {
+                turno = "#ficha1";
+                $("#marcadorP").css('color', 'red');
+                document.getElementById("marcadorP").innerHTML = "Turno del jugador 1";
+            }
+            dadoActivo = true;
+        }
+
+    }
 }
 
 var nombrePartida = "";
