@@ -68,8 +68,9 @@ socket.on("confirmar_partida", function(datos) {
     jugadoresUnidos++;
     $("#waitPlayers").append("<p>" + datos.nombreUsuario + " se ha unido</p>");
     if (jugadoresUnidos === numJugadores) {
-        $("#waitPlayers").append("<p>***SALA LLENA***</p>");
+        $("#waitPlayers").append("<p>***SALA LLENAA***</p>");
         socket.emit("comenzar_partida", datos);
+        partidaActual = datos.nombrePartida;
         window.location = "/TrivialWarsClient/public_html/board/board.html";
     }
 });
